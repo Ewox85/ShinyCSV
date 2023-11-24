@@ -1,9 +1,21 @@
 let loadedData = []; // Pour stocker les données chargées
+let dataTable;
 
 $(document).ready(function () {
     $('#csv-file').change(handleFileSelect);
     $('#reload-asc-button').click(() => reloadFileWithSorting('asc'));
     $('#reload-desc-button').click(() => reloadFileWithSorting('desc'));
+
+    // Initialiser DataTables
+    dataTable = $('#pokemon-table').DataTable({
+        paging: false, // Désactiver la pagination pour afficher toutes les données en une seule page
+        ordering: false // Désactiver le tri initial
+    });
+
+    // Ajouter un événement de recherche à la barre de recherche
+    $('#search-input').on('keyup', function () {
+        dataTable.search(this.value).draw(); // Effectuer une recherche et redessiner la table
+    });
 });
 
 
